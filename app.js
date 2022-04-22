@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-// const rotausers = require('./routers/users');
+const rotausers = require('./routers/users');
 const rotaprods = require('./routers/produtos');
 // const rotaimgs = require('./routers/imagens');
 // app.use('/api/uploads', express.static('uploads'));
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use('/api/teste', (req, res, next) => {
   res.status(200).send({  mensagem : 'rota teste ola mundo' });
 });
-// app.use('/api/users', rotausers);
+app.use('/api/users', rotausers);
 app.use('/api/produtos', rotaprods);
 // app.use('/api/imgs', rotaimgs);
 /* ==================================================================== */
