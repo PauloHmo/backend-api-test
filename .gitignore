@@ -1,0 +1,11 @@
+node_modules/
+.vscode/
+
+nodemon.json
+.env
+.env.local
+
+uploads/*
+!uploads/.gitkeep
+
+tests.js
