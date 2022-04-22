@@ -3,10 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const rotausers = require('./routers/users');
 const rotaprods = require('./routers/produtos');
-// const rotaimgs = require('./routers/imagens');
-// app.use('/api/uploads', express.static('uploads'));
+const rotaimgs = require('./routers/imagens');
 
-app.use( bodyParser.urlencoded({ extended: false }) ); //fals eh so dados simples
+app.use('/api/uploads', express.static('uploads'));
+
+app.use( bodyParser.urlencoded({ extended: false }) );
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -25,7 +26,7 @@ app.use('/api/teste', (req, res, next) => {
 });
 app.use('/api/users', rotausers);
 app.use('/api/produtos', rotaprods);
-// app.use('/api/imgs', rotaimgs);
+app.use('/api/imgs', rotaimgs);
 /* ==================================================================== */
 // Sem rota encontrada
 app.use((req, res, next) => {
