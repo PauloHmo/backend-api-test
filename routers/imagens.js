@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, nome);
   }
 });
-// const uploadC = multer({ dest: 'uploads/'});
+
 const upload = multer({ 
   storage: storage, 
   limits: { fileSize: 1024 * 1024 * 5 },  // limita a 5 mb
@@ -29,11 +29,13 @@ router.get('/produto/:id_prod', imgsControl.getProdImgs);
 /* --------------------------------------- */
 router.get('/:id_img', imgsControl.getImgid);
 /* --------------------------------------- */
-// como eh forma data, ele processa o upload da imagem primeiro
-// router.post('/', upload.single('produto_imagem'), login.obrigatorio, imgsControl.addImg);
-router.post('/', upload.single('produto_imagem'), imgsControl.addImg);
+router.post('/', upload.single('produto_imagem'), login.obrigatorio, imgsControl.addImg);
+// router.post('/', upload.single('produto_imagem'), imgsControl.addImg);
 /* --------------------------------------- */
 router.patch('/:id_prod', upload.single('produto_imagem'), imgsControl.upImg);
 /* --------------------------------------- */
 router.delete('/', imgsControl.delImg);
+/* --------------------------------------- */
 //#endregion
+/* ==================================================================== */
+module.exports = router;

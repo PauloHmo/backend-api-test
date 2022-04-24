@@ -38,7 +38,7 @@ router.post('/cadastro', (req, res, next) => {
               conn.release();
               if (error) { return res.status(500).send({ erro: error, response: null }) } 
               res.status(201).send({
-                msg : `CLIENTE ${nome} CADASTRADO COM SUCESSO!`,
+                msg : `USUÁRIO ${nome} CADASTRADO COM SUCESSO!`,
                 nome: nome,
                 id: resultado.insertId
               })
@@ -79,7 +79,7 @@ router.post('/login', (req, res, next) => {
           //process.env.JWT_KEY, { expiresIn: "1h" })
           return res.status(201).send({ msg:'CLIENTE AUTORIZADO', id: results[0].iduser, nome: results[0].nome, token: token }) 
         }
-        return res.status(401).send({ erro: "Erro de Autenticação!" })
+        return res.status(401).send({ erro: "Erro de Autenticação! " + req.body.email })
       });
     });
   });
