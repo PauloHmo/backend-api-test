@@ -39,9 +39,9 @@ Implementa rotas e funcionalidades básicas mais comuns em projetos reais, que s
 
 Tais funcionalidades servem de base e padrão para qualquer rota futuramente implementada.
 
-Possui tecnologia de criptografia para dados sensíveis, proteção das rotas(end-points) com
+Possui tecnologia de criptografia para dados sensíveis, proteção das rotas(end-points) através de 
 
-autenticação de usuários via token com limite de tempo, e revalidação dos tokens (úteis para Front-End).
+autenticação JWT do usuário com restrição por tempo, e revalidação dos tokens (úteis para Front-End).
 <br/>
 
 Além do Framework, esta API utiliza as seguintes bibliotecas adicionais como dependências:
@@ -57,13 +57,26 @@ São disponibilizados arquivos 'example' para configuração das variáveis de a
 de acordo com as boas práticas no Git Hub, <br>podendo utilizar .env ou nodemon.json
 caso inicie o projeto com Nodemon, bastando configurá-los e renomeá-los.
 
-### ***Dependências pendentes ou implementadas:***
+### ***Banco de dados:***
 
-  - [x] Melhoria das mensagens de erro via console ou response
-  - [x] Data-base Schemas para criação de DB e tabelas respectivas ao código
-  - [ ] Refatorar arquivo users.js para reuso do módulo 'execute' em mysql.js
+Esta API utiliza banco de dados relacionais, a princípio MySQL. Note que não é necessário
+a criação de chaves relacionais na criação do mesmo, devido ao fato de utilizar views para 
+consultas, e um trigger delete em 'produtos'. (Isso facilita qualquer alteração ou manutenção das tabelas) 
+Considere certo uma migração para PostgreSQL futuramente.
 
-### ***Implementações necessárias:***
+### ***Alterações pendentes ou implementadas:***
 
-  + Criação do Banco de Dados e tabelas de acordo com arquivos session.sql providos
-  + Testar as rotas comentadas e Implementar funcões middleware/login após testes
+  - [x] Revisão das mensagens de erro via console ou response
+  - [x] Disponibilizar arquivos para criação de DB e tabelas respectivas
+  - [ ] Refatorar arquivo users.js para redução de código e reuso do módulo 'execute' em mysql.js
+  - [ ] Migração de banco de dados de MySQL para PostgreeSQL
+
+### ***Implementações necessárias e recomendações ao desenvolvedor:***
+
+  + Instalação do Banco de Dados, Node.js, Framework Express e bibliotecas de dependência
+  + Criação do Banco de Dados e tabelas de acordo com arquivos session.sql disponibilizados (Não necessitam de chave relacional a princípio por utilizar views, permitindo alterações ao decorrer do desenvolvimento)
+  + Inserção direta dos dados iniciais ( tabelas não relacionais de produtos, e posteriormente as tabelas relacionais )
+  + Inserção de dados de usuário através do end-point de 'cadastro' ( para registro criptografado da senha )
+  + Teste de requisições GET após todas as tabelas devidamente populadas
+  + Teste unitário das rotas comentadas e posterior implementação de funções middleware/login em TODAS elas
+  + Implementação opcional de funções middleware/login nas demais rotas
