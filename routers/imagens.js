@@ -4,6 +4,8 @@ const multer = require('multer');
 const login = require('../middleware/login');
 const imgsControl = require ('../controllers/imagens-controller');
 
+/* --- NOTE: All commented routs needs a middleware/login function after DB tests --- */
+
 const storage = multer.diskStorage({
   destination: function(req, file, cb){ 
     cb(null, './uploads/'); 
@@ -28,13 +30,15 @@ router.get('/', imgsControl.getAllImgs);
 router.get('/produto/:id_prod', imgsControl.getProdImgs);
 /* --------------------------------------- */
 router.get('/:id_img', imgsControl.getImgid);
-/* --------------------------------------- */
-router.post('/', upload.single('produto_imagem'), login.obrigatorio, imgsControl.addImg);
 // router.post('/', upload.single('produto_imagem'), imgsControl.addImg);
+
+/* -------------------- middleware/login function example -------- */
+// router.post('/', upload.single('produto_imagem'), login.obrigatorio, imgsControl.addImg);
+
 /* --------------------------------------- */
-router.patch('/:id_prod', upload.single('produto_imagem'), imgsControl.upImg);
+// router.patch('/:id_prod', upload.single('produto_imagem'), imgsControl.upImg);
 /* --------------------------------------- */
-router.delete('/', imgsControl.delImg);
+// router.delete('/', imgsControl.delImg);
 /* --------------------------------------- */
 //#endregion
 /* ==================================================================== */

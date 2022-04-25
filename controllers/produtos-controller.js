@@ -56,7 +56,7 @@ exports.addCateg = async (req, res, next) => {
   const params = [priority, nome_categ]
   try {
     const result =  await mysql.execute(query, params);    
-    if (result.affectedRows < 1) { return res.status(401).send({ erro: "Erro ao adicionar produto!" }) }
+    if (result.affectedRows < 1) { return res.status(401).send({ erro: "Erro ao adicionar categoria!" }) }
     const response = { id_categ: result.insertId, priority: priority, nome_categ: nome_categ } 
     categorias.push(response)
     return res.status(201).send({ 

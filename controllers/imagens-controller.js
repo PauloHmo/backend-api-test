@@ -23,7 +23,7 @@ const delFile = (nome) => {
       if (err) throw err;
       console.log(path, ' was deleted'); 
     })    
-  } else { console.log('nao existe arq pra del', ); }  
+  } else { console.log(path, ' NOT FOUND!!!' ); }  
 }
 /* --------------------------------------- */
 const getImgNameByid = async (id_img) => {
@@ -61,7 +61,7 @@ exports.getImgid = async (req, res) => {
   const query = 'SELECT * FROM prod_imgs WHERE id_img = ?;';
   try {
     const result =  await mysql.execute(query, [req.params.id_img]);    
-    if (result.length < 1) { return res.status(401).send({ erro: "não Encontrado!" }) }
+    if (result.length < 1) { return res.status(401).send({ erro: "Imagem não Encontrada!" }) }
     return res.status(200).send({ response: result })
   } catch (error) {
     return res.status(500).send({ erro: error})
@@ -70,30 +70,30 @@ exports.getImgid = async (req, res) => {
 /* --------------------------------------- */
 exports.addImg = async (req, res, next) => {
   // console.log('req f = ' , req.file);
-  if (faltaCampos(['fk_id_prod'],req.body)) { return res.status(500).send({ erro:'faltaCampos'}) }  
-  if (!req.file && !req.body.nome_img) { return res.status(500).send({ erro:'SEM IMAGEM'})  }
+  if (faltaCampos(['fk_id_prod'],req.body)) { return res.status(500).send({ erro:'faltando id do Produto!'}) }  
+  if (!req.file && !req.body.nome_img) { return res.status(500).send({ erro:'SEM IMAGEM ENVIADA'})  }
   const { fk_id_prod, nome_img, descricao } = req.body;
   const nameimg = (!req.file) ? setImgUrl(nome_img) : setImgUrl(req.file.path); 
   const query = 'INSERT INTO prod_imgs(fk_id_prod, nome_img, descricao) values (?,?,?);';
   try {
     const result =  await mysql.execute(query, [fk_id_prod, nameimg, descricao]);    
-    if (result.affectedRows < 1) { return res.status(401).send({ erro: "não Encontrado!" }) }
+    if (result.affectedRows < 1) { return res.status(401).send({ erro: "Erro ao inserir imagem!" }) }
     const shortname = setImgUrl(nameimg, 'nome')
     return res.status(201).send({ 
       msg: `Imagem ${shortname} Adicionada com Sucesso!`, 
       response: { id_prod: fk_id_prod, id_img: result.insertId, nome_img: nameimg, descricao: descricao } 
     })
   } catch (error) {
-    console.log('err ', error);
+    console.log('Error: ', error);
     return res.status(500).send({ erro: error})
   }
 }
 /* --------------------------------------- */
 exports.upImg = async (req, res, next) => {
   if (faltaCampos(['id_img', 'fk_id_prod'],req.body)) { 
-    return res.status(500).send({ erro:'faltaCampos'})
+    return res.status(500).send({ erro:'faltando Campos'})
   }
-  if (!req.file && !req.body.nome_img) { return res.status(500).send({ erro:'SEM IMAGEM'})  }
+  if (!req.file && !req.body.nome_img) { return res.status(500).send({ erro:'SEM IMAGEM ENVIADA'})  }
   const { id_img, fk_id_prod, nome_img, descricao } = req.body;
   const nameimg = (!req.file) ? setImgUrl(nome_img) : setImgUrl(req.file.path);
   var oldimg;
@@ -107,7 +107,7 @@ exports.upImg = async (req, res, next) => {
       oldimg = oldimg.slice(oldimg.indexOf('uploads/'));
     } 
     const result =  await mysql.execute(query, params);
-    if (result.affectedRows < 1) { return res.status(401).send({ erro: "não Encontrado!" }) }
+    if (result.affectedRows < 1) { return res.status(401).send({ erro: "Erro ao alterar imagem!" }) }
     if (req.file) { delFile(oldimg); }
     const shortname = setImgUrl(nameimg, 'nome');
     return res.status(201).send({ 
@@ -115,12 +115,12 @@ exports.upImg = async (req, res, next) => {
       response: { id_prod: fk_id_prod, id_img: id_img, nome_img: nameimg, descricao: descricao } 
     })
   } catch (error) {
-    return res.status(500).send({ erro: 'aaa' + error})
+    return res.status(500).send({ erro: 'Update error, ' + error})
   }
 }
 /* --------------------------------------- */
 exports.delImg = async (req, res, next) => {
-  if (!('id_img' in req.body)) { return res.status(500).send({ erro:'faltaCampos'}) }
+  if (!('id_img' in req.body)) { return res.status(500).send({ erro:'faltando Campos'}) }
   const { id_img } = req.body;
   var { nome_img } = req.body;
   try {
@@ -133,7 +133,7 @@ exports.delImg = async (req, res, next) => {
     const query = 'DELETE FROM prod_imgs WHERE id_img = ?;';
     const resultb =  await mysql.execute(query, [id_img]);
     const rows = resultb.affectedRows
-    if (rows < 1) { return res.status(401).send({ erro: "não REMOVIDO!" }) }
+    if (rows < 1) { return res.status(401).send({ erro: "Erro ao Deletar imagem!" }) }
     delFile(nome_img);
     return res.status(201).send({ 
       msg: `${rows} Imagem id = ${id_img} REMOVIDA com Sucesso!`, response: { result: nome_img }       
