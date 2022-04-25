@@ -18,6 +18,17 @@ conexão a Banco de Dados relacionais (incialmente MySQL), <br> demonstrando fun
 básicas de uma API back-End que serve dados para aplicações Front-End de forma independente, 
 <br> seguindo os padrões REST de desenvolvimento.
 
+### **Importante:**
+  ### ***- As rotas comentadas(propositalmente) exigem autenticação por padrão!***
+  ### - ***Teste cada rota e acrescente as funções middleware/login após os testes!***
+  ### Exemplo: 
+  ```
+    router.delete('/', prodsControl.delCateg)
+    router.delete('/', login.obrigatorio, prodsControl.delCateg) 
+  ```
+
+<br/>
+
 ### ***Tecnologias e Funcionalidades:***
 
 Esta API provê imagens e dados possibilitando leitura, adição, alteração e remoção dos mesmos.
@@ -31,9 +42,9 @@ Tais funcionalidades servem de base e padrão para qualquer rota futuramente imp
 Possui tecnologia de criptografia para dados sensíveis, proteção das rotas(end-points) com
 
 autenticação de usuários via token com limite de tempo, e revalidação dos tokens (úteis para Front-End).
-<br/><br/>
+<br/>
 
-Além do Framework, utiliza as seguintes bibliotecas adicionais como dependências:
+Além do Framework, esta API utiliza as seguintes bibliotecas adicionais como dependências:
 
   + Bcrypt ( para criptografia )
   + Jwt ( JSON Web Token para autenticação via token )
@@ -46,12 +57,13 @@ São disponibilizados arquivos 'example' para configuração das variáveis de a
 de acordo com as boas práticas no Git Hub, <br>podendo utilizar .env ou nodemon.json
 caso inicie o projeto com Nodemon, bastando configurá-los e renomeá-los.
 
-### ***Dependências pendentes:***
+### ***Dependências pendentes ou implementadas:***
 
-  - [x] Refatoramento das mensagens de erro ou response
-  - [ ] Data-base Schema para compreensão da arquitetura das tabelas
+  - [x] Melhoria das mensagens de erro via console ou response
+  - [x] Data-base Schemas para criação de DB e tabelas respectivas ao código
+  - [ ] Refatorar arquivo users.js para reuso do módulo 'execute' em mysql.js
 
 ### ***Implementações necessárias:***
 
-  + Construção do Banco de Dados seguindo tabelas e campos referente as querys
-  + Descomentar as rotas em produtos.js ( comentadas para testes em futuro Deploy )
+  + Criação do Banco de Dados e tabelas de acordo com arquivos session.sql providos
+  + Testar as rotas comentadas e Implementar funcões middleware/login após testes
