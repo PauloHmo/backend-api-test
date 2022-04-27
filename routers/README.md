@@ -5,7 +5,7 @@
 <br>
 
   ## 1. *Note* / Nota:
-  ### - *The end-points for Add and Update products does NOT handle upload images yet, but the imagens.js file end-points does.*
+  ### - *The Add and Update products end-points does NOT handle upload images yet, but the imagens.js file end-points does.*
   ### - Os end-points para adição e alteração de produtos ainda não tratam upload de imagens, mas os end-points do arquivo imagens.js tratam.
 <br>
 
@@ -21,6 +21,6 @@
 
 ### - *Example* / Exemplo ( produtos.js ):
   ```
-    router.delete('/', prodsControl.delCateg)
-    router.delete('/', login.obrigatorio, prodsControl.delCateg) 
+  //  router.delete('/', prodsControl.delCateg)
+  //  router.delete('/', login.obrigatorio, prodsControl.delCateg) 
   ```

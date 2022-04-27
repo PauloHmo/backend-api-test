@@ -65,8 +65,10 @@ Mas considere uma migração para PostgreSQL.
 ### ***Alterações pendentes ou implementadas:***
 
   - [x] Disponibilizar arquivos .sql para criação de tabelas respectivas
-  - [ ] Refatorar users.js para reuso do módulo 'execute' em mysql.js
-  - [ ] Duplicação de rota, lógica e tabela clients exclusivo para admins
+  - [x] Refatorar users.js para reuso do módulo 'execute' em mysql.js
+  - [x] Duplicação de rota, lógica e tabela clients exclusivo para admins
+  - [x] Implementar funções middleware/login baseadas em nível de acesso para admins
+  - [ ] Adicionar funções de upload para end-points de produtos.js e refatorar toda lógica envolvida
   - [ ] Migração de banco de dados de MySQL para PostgreeSQL
 
 ### ***Implementações necessárias e recomendações ao desenvolvedor:***
